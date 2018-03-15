@@ -2,7 +2,7 @@
 class MyTodoList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { todo: [], text: '', id: 1 };
+    this.state = { todo: [], text: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -15,7 +15,7 @@ class MyTodoList extends React.Component {
     // Insert new item
     todo.push(this.state.text);
 
-    this.setState({ todo: todo, text: '', id: this.state.id + 1 });
+    this.setState({ todo: todo, text: '' });
     e.preventDefault();
   }
 
@@ -28,12 +28,12 @@ class MyTodoList extends React.Component {
           <label>Input new list</label>
           <input
             type="text" name="text"
-            onChange={(e) => this.handleChange(e)}
+            onChange={this.handleChange}
             value={this.state.text} />
           <input
             type="submit"
             onClick={this.handleSubmit}
-            value={'Add #' + this.state.id } />
+            value={'Add #' + (this.state.todo.length + 1)} />
         </form>
       </div>
     );
