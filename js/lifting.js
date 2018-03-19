@@ -53,16 +53,30 @@ class TemperatureInput extends React.Component {
 }
 
 class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { temperature: '', scale: 'c' };
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+  }
+
+  handleCelsiusChange() {
+    console.log('#1');
+  }
+  handleFahrenheitChange() {
+    console.log('#2');
+  }
   render() {
     return(
       <div>
         <TemperatureInput
           scale='c'
-          temperature={}
+          onTemperatureChange={this.handleCelsiusChange}
           />
         <TemperatureInput
           scale='f'
-          temperature={}/>
+          onTemperatureChange={this.handleFahrenheitChange}
+          />
       </div>
     );
   }
