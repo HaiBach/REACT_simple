@@ -28,21 +28,19 @@ const scaleNames = {
 class TemperatureInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { temperature: '' };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    // this.setState({ temperature : e.target.value });
+    console.log('#input change');
     this.props.onTemperatureChange(e.target.value);
   }
 
   render() {
-    // const temperature = this.state.temperature;
     const temperature = this.props.temperature;
     return(
-      <fieldset>
-        <legend>Input temperature in {scaleNames[this.props.scale]} :</legend>
+      <fieldset style={{ marginBottom: 20 }}>
+        <legend style={{ fontSize: 28 }}>Input temperature in <b style={{ color: 'red' }}>{scaleNames[this.props.scale]}</b> :</legend>
         <input
           value={temperature}
           onChange={this.handleChange}
@@ -55,26 +53,33 @@ class TemperatureInput extends React.Component {
 class Calculator extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { temperature: '', scale: 'c' };
+    this.state = { temperatureC: '', temperatureF: '' };
     this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
     this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
   }
 
-  handleCelsiusChange() {
-    console.log('#1');
+  handleCelsiusChange(celsius) {
+    console.log('#1', celsius);
+    const temp = (celsius * 9 / 5) + 32;
+    this.setState({ temperatureF: temp });
   }
-  handleFahrenheitChange() {
-    console.log('#2');
+  handleFahrenheitChange(fahrenheit) {
+    console.log('#2', fahrenheit);
+    const temp = (fahrenheit - 32) * 5 / 9;
+    this.setState({ temperatureC: temp });
   }
   render() {
+    // const temperature = this.state.temperature;
     return(
       <div>
         <TemperatureInput
           scale='c'
+          temperature={this.state.temperatureC}
           onTemperatureChange={this.handleCelsiusChange}
           />
         <TemperatureInput
           scale='f'
+          temperature={this.state.temperatureF}
           onTemperatureChange={this.handleFahrenheitChange}
           />
       </div>
