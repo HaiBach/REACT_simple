@@ -38,6 +38,7 @@ class TemperatureInput extends React.Component {
 
   render() {
     const temperature = this.props.temperature;
+    console.log('render', temperature, this.props.scale);
     return(
       <fieldset style={{ marginBottom: 20 }}>
         <legend style={{ fontSize: 28 }}>Input temperature in <b style={{ color: 'red' }}>{scaleNames[this.props.scale]}</b> :</legend>
@@ -61,12 +62,12 @@ class Calculator extends React.Component {
   handleCelsiusChange(celsius) {
     console.log('#1', celsius);
     const temp = (celsius * 9 / 5) + 32;
-    this.setState({ temperatureF: temp });
+    this.setState({ temperatureC: celsius, temperatureF: temp });
   }
   handleFahrenheitChange(fahrenheit) {
     console.log('#2', fahrenheit);
     const temp = (fahrenheit - 32) * 5 / 9;
-    this.setState({ temperatureC: temp });
+    this.setState({ temperatureC: temp, temperatureF: fahrenheit });
   }
   render() {
     // const temperature = this.state.temperature;
