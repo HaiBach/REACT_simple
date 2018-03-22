@@ -16,7 +16,7 @@ function tryConvert(temperature, convert) {
     return '';
   }
   const output = convert(input);
-  const rounded = Math.round(output * 1000) / 1000;
+  const rounded = Math.round(output * 10) / 10;
   return rounded.toString();
 }
 
@@ -30,15 +30,11 @@ class TemperatureInput extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   }
-
   handleChange(e) {
-    console.log('#input change');
     this.props.onTemperatureChange(e.target.value);
   }
-
   render() {
     const temperature = this.props.temperature;
-    console.log('render', temperature, this.props.scale);
     return(
       <fieldset style={{ marginBottom: 20 }}>
         <legend style={{ fontSize: 28 }}>Input temperature in <b style={{ color: 'red' }}>{scaleNames[this.props.scale]}</b> :</legend>
@@ -58,19 +54,15 @@ class Calculator extends React.Component {
     this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
     this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
   }
-
   handleCelsiusChange(celsius) {
-    console.log('#1', celsius);
-    const temp = (celsius * 9 / 5) + 32;
+    const temp = tryConvert(celsius, toFahrenheit);
     this.setState({ temperatureC: celsius, temperatureF: temp });
   }
   handleFahrenheitChange(fahrenheit) {
-    console.log('#2', fahrenheit);
-    const temp = (fahrenheit - 32) * 5 / 9;
+    const temp = tryConvert(fahrenheit, toCelsius);
     this.setState({ temperatureC: temp, temperatureF: fahrenheit });
   }
   render() {
-    // const temperature = this.state.temperature;
     return(
       <div>
         <TemperatureInput
@@ -83,9 +75,12 @@ class Calculator extends React.Component {
           temperature={this.state.temperatureF}
           onTemperatureChange={this.handleFahrenheitChange}
           />
+        <BoilingVerdict
+          celsius={this.state.temperatureC}
+        />
       </div>
     );
   }
 }
 
-ReactDOM.render(<Calculator />, document.getElementById('root'));
+ReactDOM.render(<Calculator />, document.getElementById('root'));``
